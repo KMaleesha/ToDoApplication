@@ -1,4 +1,4 @@
 package org.myonlinestore.todoapplication.service.Impl;
 
-public class userServiceImpl {
+public class UserServiceImpl {
 }

@@ -1,7 +1,6 @@
 package org.myonlinestore.todoapplication.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,9 +9,11 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class toDoItems {
+@Table(name = "items")
+public class ToDoItems {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String title;
