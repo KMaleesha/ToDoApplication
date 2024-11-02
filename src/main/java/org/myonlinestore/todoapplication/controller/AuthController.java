@@ -42,7 +42,7 @@ public class AuthController {
     @Autowired
     private JwtGenerator jwtGenerator;
 
-    @PostMapping("register")
+    @PostMapping("user/register")
     public ResponseEntity<String> register(@RequestBody UserRegisterDto userRegisterDto) {
         if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
             return new ResponseEntity<>("Email address is taken!", HttpStatus.BAD_REQUEST);
