@@ -1,11 +1,13 @@
 package org.myonlinestore.todoapplication.controller;
 
+import org.myonlinestore.todoapplication.dto.AuthResponseDto;
 import org.myonlinestore.todoapplication.dto.UserLoginDto;
 import org.myonlinestore.todoapplication.dto.UserRegisterDto;
 import org.myonlinestore.todoapplication.model.Role;
 import org.myonlinestore.todoapplication.model.UserEntity;
 import org.myonlinestore.todoapplication.repository.RoleRepository;
 import org.myonlinestore.todoapplication.repository.UserRepository;
+import org.myonlinestore.todoapplication.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,9 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtGenerator jwtGenerator;
+
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserRegisterDto userRegisterDto) {
         if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
@@ -56,12 +61,13 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public  ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) {
+    public  ResponseEntity<AuthResponseDto> login(@RequestBody UserLoginDto userLoginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(),
                         userLoginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("Authentication Successful!", HttpStatus.OK);
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 
 
