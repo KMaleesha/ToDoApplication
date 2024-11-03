@@ -39,6 +39,7 @@ public class SecurityConfig {
               .authorizeRequests()
               .requestMatchers("/api/user/**").permitAll()
               .requestMatchers("/api/role/**").permitAll()
+              .requestMatchers("/api/todo/**").permitAll()
               .anyRequest().authenticated()
               .and()
               .httpBasic();
