@@ -1,11 +1,15 @@
 package org.myonlinestore.todoapplication.service.Impl;
 
+import org.myonlinestore.todoapplication.enums.PriorityType;
+import org.myonlinestore.todoapplication.enums.StatusType;
 import org.myonlinestore.todoapplication.model.ToDoItems;
 import org.myonlinestore.todoapplication.repository.ToDoItemRepository;
 import org.myonlinestore.todoapplication.service.ToDoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,5 +62,30 @@ public class ToDoItemServiceImpl implements ToDoItemService {
         }else{
             return "User not Found";
         }
+    }
+
+    @Override
+    public List<ToDoItems> getByTitle(String title) {
+        return toDoItemRepository.findByTitleContaining(title);
+    }
+
+    @Override
+    public List<ToDoItems> getByPriority(PriorityType priority) {
+        return toDoItemRepository.findByPriority(priority);
+    }
+
+    @Override
+    public List<ToDoItems> getByStatus(StatusType status) {
+         return toDoItemRepository.findByStatus(status);
+    }
+
+    @Override
+    public List<ToDoItems> getByDueDate(Date dueDate) {
+       return toDoItemRepository.findByDueDate(dueDate);
+    }
+
+    @Override
+    public List<ToDoItems> getByCreatedDate(Timestamp createdDate) {
+        return toDoItemRepository.findByCreatedDate(createdDate);
     }
 }
