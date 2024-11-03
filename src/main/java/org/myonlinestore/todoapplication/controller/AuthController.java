@@ -42,7 +42,7 @@ public class AuthController {
     @Autowired
     private JwtGenerator jwtGenerator;
 
-    @PostMapping("user/register")
+    @PostMapping(value = "user/register")
     public ResponseEntity<String> register(@RequestBody UserRegisterDto userRegisterDto) {
         if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
             return new ResponseEntity<>("Email address is taken!", HttpStatus.BAD_REQUEST);
@@ -60,7 +60,7 @@ public class AuthController {
         return new ResponseEntity<>("User Registered Successfully!", HttpStatus.CREATED);
     }
 
-    @PostMapping("login")
+    @PostMapping(value = "login")
     public  ResponseEntity<AuthResponseDto> login(@RequestBody UserLoginDto userLoginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(),
