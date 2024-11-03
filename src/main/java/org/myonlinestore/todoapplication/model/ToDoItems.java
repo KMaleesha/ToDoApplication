@@ -1,10 +1,14 @@
 package org.myonlinestore.todoapplication.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.myonlinestore.todoapplication.enums.PriorityType;
+import org.myonlinestore.todoapplication.enums.StatusType;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -18,8 +22,13 @@ public class ToDoItems {
 
     private String title;
     private String description;
-    private int priority;
-    private String status;
-    private LocalDateTime dueDate;
-    private LocalDateTime createdDate;
+
+    @Enumerated
+    private PriorityType priority;
+
+    @Enumerated
+    private StatusType status;
+
+    private Date dueDate;
+    private Timestamp createdDate;
 }
