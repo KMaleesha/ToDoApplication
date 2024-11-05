@@ -3,6 +3,8 @@ package org.myonlinestore.todoapplication.service;
 import org.myonlinestore.todoapplication.enums.PriorityType;
 import org.myonlinestore.todoapplication.enums.StatusType;
 import org.myonlinestore.todoapplication.model.ToDoItems;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -23,4 +25,5 @@ public interface ToDoItemService {
     public List<ToDoItems> getByStatus(StatusType status);
     public List<ToDoItems> getByDueDate(Date dueDate);
     public List<ToDoItems> getByCreatedDate(Timestamp createdDate);
+    public Page<ToDoItems> getAllItems(Pageable pageable);
 }
