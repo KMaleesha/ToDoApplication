@@ -2,8 +2,7 @@ package org.myonlinestore.todoapplication.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.myonlinestore.todoapplication.enums.PriorityType;
 import org.myonlinestore.todoapplication.enums.StatusType;
 
@@ -13,7 +12,10 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Builder
 @Table(name = "items")
+@AllArgsConstructor
+@NoArgsConstructor
 public class ToDoItems {
 
     @Id
