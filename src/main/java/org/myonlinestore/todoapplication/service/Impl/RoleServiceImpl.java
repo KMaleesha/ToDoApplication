@@ -25,7 +25,6 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.save(role);
     }
 
-
     @Override
     public Optional<Role> getRoleById(int id) {
         return roleRepository.findById(id);

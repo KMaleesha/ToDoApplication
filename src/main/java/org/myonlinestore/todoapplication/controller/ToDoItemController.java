@@ -6,7 +6,11 @@ import org.myonlinestore.todoapplication.enums.StatusType;
 import org.myonlinestore.todoapplication.model.ToDoItems;
 import org.myonlinestore.todoapplication.service.ToDoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,6 +99,11 @@ public class ToDoItemController {
     @GetMapping(value = "/search/created-date")
     public List<ToDoItems> searchByCreatedDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Timestamp createdDate) {
         return toDoItemService.getByCreatedDate(createdDate);
+    }
+
+    @GetMapping(value = "/all/pageable/items")
+    public Page<ToDoItems> getAllItems(Pageable pageable) {
+        return toDoItemService.getAllItems(pageable);
     }
 
 }

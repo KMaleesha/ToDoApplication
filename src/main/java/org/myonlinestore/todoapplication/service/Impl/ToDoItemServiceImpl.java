@@ -6,6 +6,9 @@ import org.myonlinestore.todoapplication.model.ToDoItems;
 import org.myonlinestore.todoapplication.repository.ToDoItemRepository;
 import org.myonlinestore.todoapplication.service.ToDoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -88,4 +91,10 @@ public class ToDoItemServiceImpl implements ToDoItemService {
     public List<ToDoItems> getByCreatedDate(Timestamp createdDate) {
         return toDoItemRepository.findByCreatedDate(createdDate);
     }
+
+    @Override
+    public Page<ToDoItems> getAllItems(Pageable pageable) {
+        return toDoItemRepository.findAll(pageable);
+    }
+
 }
