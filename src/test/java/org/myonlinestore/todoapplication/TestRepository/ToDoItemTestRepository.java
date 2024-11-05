@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.NONE, replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -204,5 +205,23 @@ public class ToDoItemTestRepository {
         Assertions.assertNotNull(updatedTodoItem.getStatus());
         Assertions.assertNotNull(updatedTodoItem.getDueDate());
         Assertions.assertNotNull(updatedTodoItem.getCreatedDate());
+    }
+
+    @Test
+    public void TodoItemRepository_deleteTodoItem_ReturnDeleteResult(){
+
+        ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+        toDoItemRepository.save(toDoItems);
+        toDoItemRepository.deleteById(toDoItems.getId());
+        Optional<ToDoItems> todoItemsReturn = toDoItemRepository.findById(toDoItems.getId());
+
+        Assertions.assertFalse(todoItemsReturn.isPresent());
     }
 }
