@@ -175,4 +175,34 @@ public class ToDoItemTestRepository {
          List<ToDoItems> foundItems = toDoItemRepository.findByCreatedDate(toDoItems.getCreatedDate());
          Assertions.assertNotNull(foundItems);
     }
+
+    @Test
+    public void TodoItemsRepository_UpdateTodoItem_ReturnTodoItems(){
+
+        ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+        toDoItemRepository.save(toDoItems);
+        ToDoItems updateTodoItems = toDoItemRepository.findById(toDoItems.getId()).orElse(null);
+        assert updateTodoItems != null;
+        updateTodoItems.setTitle("Todo item title updated");
+        updateTodoItems.setDescription("Todo description updated");
+        updateTodoItems.setPriority(PriorityType.HIGH);
+        updateTodoItems.setStatus(StatusType.TODO);
+        updateTodoItems.setDueDate(new Date(2024 - 1900, 9, 11));
+        updateTodoItems.setCreatedDate(Timestamp.valueOf("2024-10-10 00:00:00"));
+
+        ToDoItems updatedTodoItem = toDoItemRepository.save(updateTodoItems);
+        Assertions.assertNotNull(updatedTodoItem.getTitle());
+        Assertions.assertNotNull(updatedTodoItem.getDescription());
+        Assertions.assertNotNull(updatedTodoItem.getPriority());
+        Assertions.assertNotNull(updatedTodoItem.getStatus());
+        Assertions.assertNotNull(updatedTodoItem.getDueDate());
+        Assertions.assertNotNull(updatedTodoItem.getCreatedDate());
+    }
 }
