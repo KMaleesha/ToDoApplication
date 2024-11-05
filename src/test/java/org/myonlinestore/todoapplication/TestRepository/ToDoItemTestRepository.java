@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.NONE, replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -44,5 +46,133 @@ public class ToDoItemTestRepository {
         Assertions.assertEquals(toDoItems.getStatus(), savedItems.getStatus());
         Assertions.assertEquals(toDoItems.getDueDate(), savedItems.getDueDate());
         Assertions.assertEquals(toDoItems.getCreatedDate(), savedItems.getCreatedDate());
+    }
+
+    @Test
+    public void TodoItemsRepository_findAll_ReturnAllTodoItems() {
+
+        ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+        ToDoItems toDoItems2 = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+        toDoItemRepository.save(toDoItems);
+        toDoItemRepository.save(toDoItems2);
+
+        List<ToDoItems> allTodoItems = toDoItemRepository.findAll();
+
+        Assertions.assertNotNull(allTodoItems);
+        Assertions.assertEquals(allTodoItems.size(), 5);
+        Assertions.assertNotEquals(allTodoItems.size(), 0);
+    }
+
+    @Test
+    public void TodoItemsRepository_findById_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+
+         ToDoItems toDoItem = toDoItemRepository.findById(toDoItems.getId()).orElse(null);
+         Assertions.assertNotNull(toDoItem);
+    }
+
+    @Test
+    public void TodoItemsRepository_findByTitleContaining_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+
+         List<ToDoItems> TodoItems = toDoItemRepository.findByTitleContaining(toDoItems.getTitle());
+         Assertions.assertNotNull(TodoItems);
+    }
+
+    @Test
+    public void TodoItemsRepository_findByPriority_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+
+         List<ToDoItems> TodoItems = toDoItemRepository.findByPriority(toDoItems.getPriority());
+         Assertions.assertNotNull(TodoItems);
+    }
+
+    @Test
+    public void TodoItemsRepository_findByStatus_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+         List<ToDoItems> foundItems = toDoItemRepository.findByStatus(toDoItems.getStatus());
+         Assertions.assertNotNull(foundItems);
+    }
+
+    @Test
+    public void TodoItemsRepository_findByDueDate_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+         List<ToDoItems> foundItems = toDoItemRepository.findByDueDate(toDoItems.getDueDate());
+         Assertions.assertNotNull(foundItems);
+    }
+
+    @Test
+    public void TodoItemsRepository_findByCreatedDate_ReturnTodoItems() {
+
+         ToDoItems toDoItems = ToDoItems.builder()
+                .title("Todo item title")
+                .description("Todo description")
+                .priority(PriorityType.HIGH)
+                .status(StatusType.TODO)
+                .dueDate(new Date(2024 - 1900, 9, 11))
+                .createdDate(Timestamp.valueOf("2024-10-10 00:00:00")).build();
+
+         toDoItemRepository.save(toDoItems);
+         List<ToDoItems> foundItems = toDoItemRepository.findByCreatedDate(toDoItems.getCreatedDate());
+         Assertions.assertNotNull(foundItems);
     }
 }
