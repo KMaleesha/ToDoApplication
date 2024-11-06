@@ -13,7 +13,7 @@ Technologies : SpringBoot, JWT Authentication, Spring Security, JUnit, MySQL
 
 ## How to Run
 1. clone the repository
-2. Install dependencies and build the project -> mvnw clean install
+2. Install dependencies and build the project -> mvn clean install
 3. Add your username and password to DB configurations in application.properties file. 
 4. First add the users 'USER', 'ADMIN' to the DB
 5. Then you can register the user registration.
